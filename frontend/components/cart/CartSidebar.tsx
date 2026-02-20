@@ -57,7 +57,7 @@ export default function CartSidebar() {
         image: item.image
       }));
 
-      const response = await fetch('http://localhost:3001/checkout/create-session', {
+      const response = await fetch('https://techstore-qzd2.onrender.com/checkout/create-session', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -20,7 +20,7 @@ function LoginSuccessContent() {
 
     localStorage.setItem('techstore-token', token);
 
-    fetch('http://localhost:3001/auth/me', {
+    fetch('https://techstore-qzd2.onrender.com/auth/me', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`

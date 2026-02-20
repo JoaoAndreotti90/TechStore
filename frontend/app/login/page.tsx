@@ -28,8 +28,8 @@ export default function LoginPage() {
 
     try {
       const endpoint = isLogin 
-        ? 'http://localhost:3001/auth/login' 
-        : 'http://localhost:3001/auth/register';
+        ? 'https://techstore-qzd2.onrender.com/auth/login' 
+        : 'https://techstore-qzd2.onrender.com/auth/register';
       
       const payload = isLogin 
         ? { email, password } 
@@ -75,7 +75,7 @@ export default function LoginPage() {
 
   const handleGoogleLogin = () => {
     setIsLoading(true);
-    window.location.href = 'http://localhost:3001/auth/google';
+    window.location.href = 'https://techstore-qzd2.onrender.com/auth/google';
   };
 
   return (

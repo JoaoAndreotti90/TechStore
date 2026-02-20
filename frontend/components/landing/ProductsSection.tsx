@@ -25,7 +25,7 @@ export default function ProductsSection() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const response = await fetch('http://localhost:3001/products');
+        const response = await fetch('https://techstore-qzd2.onrender.com/products');
         if (!response.ok) throw new Error('Falha na API');
         const data = await response.json();
         setProducts(data);
