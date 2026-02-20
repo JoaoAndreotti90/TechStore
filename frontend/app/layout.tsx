@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/landing/Navbar"; 
 import Footer from "@/components/landing/Footer"; 
 import CartSidebar from "@/components/cart/CartSidebar";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,7 +32,9 @@ export default function RootLayout({
         suppressHydrationWarning 
         className={`${inter.className} antialiased bg-[#0a0a0b] text-white selection:bg-indigo-500/30 flex flex-col min-h-screen`}
       >
-        <Navbar />
+        <Suspense fallback={<div className="h-20 bg-[#0a0a0b]" />}>
+          <Navbar />
+        </Suspense>
         
         <div className="flex-1">
           {children}

@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useStore } from '@/store/useStore';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
 const navLinks = [
   { name: 'Produtos', href: '/products' },
