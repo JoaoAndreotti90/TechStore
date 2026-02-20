@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+const API_URL = 'https://techstore-qzd2.onrender.com'
+
 interface Product {
   id: number;
   name: string;
@@ -54,7 +56,7 @@ export const useStore = create<StoreState>()(
         if (!token) return;
 
         try {
-          await fetch('http://localhost:3001/auth/cart', {
+          await fetch(`${API_URL}/auth/cart`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -80,7 +82,7 @@ export const useStore = create<StoreState>()(
         }
 
         try {
-          const response = await fetch('http://localhost:3001/auth/cart', {
+          const response = await fetch(`${API_URL}/auth/cart`, {
             method: 'GET',
             headers: { 'Authorization': `Bearer ${token}` }
           });
