@@ -16,13 +16,23 @@ async function bootstrap() {
   app.enableCors({
     origin: true,
     credentials: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type,Accept,Authorization',
   });
 
   const port = process.env.PORT || 3001;
-  await app.listen(port);
-
-  console.log(`Servidor rodando na porta: ${port}`);
+  
+  if (process.env.NODE_ENV !== 'production') {
+    await app.listen(port);
+  }
 }
 bootstrap();
+
+export const handler = async (req: any, res: any) => {
+  const app = await NestFactory.create(AppModule);
+  
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+  app.enableCors({ origin: true, credentials: true });
+  
+  await app.init();
+  const instance = app.getHttpAdapter().getInstance();
+  return instance(req, res);
+};
