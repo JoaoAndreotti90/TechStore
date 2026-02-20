@@ -55,6 +55,7 @@ export const useStore = create<StoreState>()(
         const token = localStorage.getItem('techstore-token');
         if (!token) return;
 
+        
         try {
           await fetch(`${API_URL}/auth/cart`, {
             method: 'POST',
