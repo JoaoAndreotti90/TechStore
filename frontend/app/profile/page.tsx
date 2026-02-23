@@ -5,7 +5,7 @@ import { useStore } from '@/store/useStore';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { User, Mail, Phone, MapPin, LogOut, Save, Trash2, AlertTriangle, Loader2 } from 'lucide-react';
+import { User, Mail, Phone, MapPin, LogOut, Save, Trash2, AlertTriangle, Loader2, CheckCircle2 } from 'lucide-react';
 
 export default function ProfilePage() {
   const { user, logout, login } = useStore();
@@ -18,9 +18,12 @@ export default function ProfilePage() {
   
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const [errorMsg, setErrorMsg] = useState(''); 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   
   const [isLoadingProfile, setIsLoadingProfile] = useState(true);
+
+  const isFormValid = name.trim() !== '' && phone.trim() !== '' && address.trim() !== '';
 
   useEffect(() => {
     const token = localStorage.getItem('techstore-token');
@@ -63,8 +66,14 @@ export default function ProfilePage() {
     if (e) e.preventDefault();
     if (!user) return;
     
+    if (!isFormValid) {
+        setErrorMsg('Por favor, preencha todos os campos obrigatórios.');
+        return;
+    }
+
     setIsSaving(true);
     setMessage('');
+    setErrorMsg(''); 
     
     try {
       const token = localStorage.getItem('techstore-token');
@@ -88,7 +97,7 @@ export default function ProfilePage() {
 
     } catch (error: unknown) {
       console.error(error);
-      setMessage('Erro ao salvar. Tente novamente.');
+      setErrorMsg('Erro ao salvar suas alterações. Tente novamente.');
     } finally {
       setIsSaving(false);
     }
@@ -101,6 +110,7 @@ export default function ProfilePage() {
   };
 
   const confirmDeleteAccount = async () => {
+    setErrorMsg(''); 
     try {
       const token = localStorage.getItem('techstore-token');
       const response = await fetch('https://tech-store-wqpq.vercel.app/auth/me', {
@@ -115,7 +125,8 @@ export default function ProfilePage() {
       router.push('/');
     } catch (error: unknown) {
       console.error(error);
-      alert('Erro ao excluir a conta. Tente novamente.');
+      setShowDeleteModal(false); 
+      setErrorMsg('Ocorreu um erro ao excluir sua conta. Por favor, tente novamente mais tarde.');
     }
   };
 
@@ -138,6 +149,13 @@ export default function ProfilePage() {
           <p className="text-gray-400 mt-2">Gerencie seus dados e informações de entrega.</p>
         </header>
 
+        {errorMsg && (
+          <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center gap-3 text-red-400">
+             <AlertTriangle className="w-5 h-5 flex-shrink-0" />
+             <p className="text-sm font-medium">{errorMsg}</p>
+          </div>
+        )}
+
         <section className="bg-[#0f0f10] border border-white/5 rounded-3xl p-8 shadow-xl">
           <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
             <User className="w-5 h-5 text-indigo-500" />
@@ -156,6 +174,7 @@ export default function ProfilePage() {
                     onChange={(e) => setName(e.target.value)} 
                     className="pl-10 bg-black/20 border-white/10 focus:border-indigo-500 text-white" 
                     autoComplete="name"
+                    required
                   />
                 </div>
               </div>
@@ -184,6 +203,7 @@ export default function ProfilePage() {
                     placeholder="(14) 99999-9999" 
                     className="pl-10 bg-black/20 border-white/10 focus:border-indigo-500 text-white" 
                     autoComplete="tel"
+                    required
                   />
                 </div>
               </div>
@@ -199,17 +219,28 @@ export default function ProfilePage() {
                     placeholder="Rua, Número, Bairro, Cidade - SP" 
                     className="pl-10 bg-black/20 border-white/10 focus:border-indigo-500 text-white" 
                     autoComplete="street-address"
+                    required
                   />
                 </div>
               </div>
             </div>
 
             <div className="pt-4 flex flex-col items-stretch md:items-end gap-3 border-t border-white/5 mt-6">
-              {message && <span className="text-green-400 text-sm text-center md:text-right font-medium">{message}</span>}
+              {message && (
+                <div className="flex items-center justify-center gap-2 text-green-400 mb-2">
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span className="text-sm font-medium">{message}</span>
+                </div>
+              )}
+              
               <Button 
                 type="submit" 
-                disabled={isSaving} 
-                className="bg-indigo-600 hover:bg-indigo-700 w-full md:w-auto md:min-w-[150px] shadow-lg shadow-indigo-500/20"
+                disabled={isSaving || !isFormValid} 
+                className={`w-full md:w-auto md:min-w-[150px] shadow-lg transition-all ${
+                  !isFormValid 
+                    ? 'bg-gray-600/50 text-gray-400 cursor-not-allowed border-none' 
+                    : 'bg-indigo-600 hover:bg-indigo-700 shadow-indigo-500/20'
+                }`}
               >
                 {isSaving ? (
                   <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Salvando...</>
