@@ -5,10 +5,14 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor() {
+    const backendUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://tech-store-wqpq.vercel.app' 
+      : 'http://localhost:3001';
+
     super({
       clientID: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
-      callbackURL: 'http://localhost:3001/auth/google/redirect',
+      callbackURL: `${backendUrl}/auth/google/redirect`,
       scope: ['email', 'profile'],
     });
   }
