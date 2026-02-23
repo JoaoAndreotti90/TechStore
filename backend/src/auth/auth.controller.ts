@@ -16,7 +16,8 @@ export class AuthController {
   async googleAuthRedirect(@Req() req, @Res() res) {
     const user = await this.authService.validateUser(req.user);
     const data = await this.authService.login(user);
-    return res.redirect(`http://localhost:3002/login/success?token=${data.access_token}`);
+    const frontendUrl = process.env.FRONTEND_URL || 'https://tech-store-topaz-sigma.vercel.app';
+    return res.redirect(`${frontendUrl}/login/success?token=${data.access_token}`);
   }
 
   @Post('register')
@@ -58,6 +59,7 @@ export class AuthController {
   async getOrders(@Req() req) {
     return this.authService.getOrders(req.user.email);
   }
+
   @Post('cart')
   @UseGuards(AuthGuard('jwt'))
   async syncCart(@Req() req, @Body() body: { cart: any[] }) {
