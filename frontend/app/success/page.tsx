@@ -21,7 +21,7 @@ function SuccessContent() {
         hasVerified.current = true;
 
         try {
-          const res = await fetch(`https://techstore-qzd2.onrender.com/checkout/verify?session_id=${sessionId}`);
+          const res = await fetch(`https://tech-store-wqpq.vercel.app/checkout/verify?session_id=${sessionId}`);
           if (!res.ok) throw new Error('Falha na verificação do pagamento');
           
           const data = await res.json();

@@ -28,8 +28,8 @@ export default function LoginPage() {
 
     try {
       const endpoint = isLogin 
-        ? 'https://techstore-qzd2.onrender.com/auth/login' 
-        : 'https://techstore-qzd2.onrender.com/auth/register';
+        ? 'https://tech-store-wqpq.vercel.app/auth/login' 
+        : 'https://tech-store-wqpq.vercel.app/auth/register';
       
       const payload = isLogin 
         ? { email, password } 
@@ -75,7 +75,7 @@ export default function LoginPage() {
 
   const handleGoogleLogin = () => {
     setIsLoading(true);
-    window.location.href = 'https://techstore-qzd2.onrender.com/auth/google';
+    window.location.href = 'https://tech-store-wqpq.vercel.app/auth/google';
   };
 
   return (

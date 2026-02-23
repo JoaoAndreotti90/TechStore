@@ -27,7 +27,7 @@ export default function ProfilePage() {
 
     if (!user) {
       if (token) {
-        fetch('https://techstore-qzd2.onrender.com/auth/me', {
+        fetch('https://tech-store-wqpq.vercel.app/auth/me', {
           headers: { 'Authorization': `Bearer ${token}` }
         })
         .then(res => {
@@ -68,7 +68,7 @@ export default function ProfilePage() {
     
     try {
       const token = localStorage.getItem('techstore-token');
-      const response = await fetch('https://techstore-qzd2.onrender.com/auth/profile', {
+      const response = await fetch('https://tech-store-wqpq.vercel.app/auth/profile', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ export default function ProfilePage() {
   const confirmDeleteAccount = async () => {
     try {
       const token = localStorage.getItem('techstore-token');
-      const response = await fetch('https://techstore-qzd2.onrender.com/auth/me', {
+      const response = await fetch('https://tech-store-wqpq.vercel.app/auth/me', {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });

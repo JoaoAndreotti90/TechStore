@@ -39,7 +39,7 @@ export default function OrdersPage() {
       }
 
       try {
-        const res = await fetch('https://techstore-qzd2.onrender.com/auth/orders', {
+        const res = await fetch('https://tech-store-wqpq.vercel.app/auth/orders', {
           headers: { Authorization: `Bearer ${token}` }
         });
 

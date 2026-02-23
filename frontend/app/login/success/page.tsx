@@ -20,7 +20,7 @@ function LoginSuccessContent() {
 
     localStorage.setItem('techstore-token', token);
 
-    fetch('https://techstore-qzd2.onrender.com/auth/me', {
+    fetch('https://tech-store-wqpq.vercel.app/auth/me', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`

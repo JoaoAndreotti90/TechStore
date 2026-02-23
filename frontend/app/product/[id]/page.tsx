@@ -33,7 +33,7 @@ export default function ProductPage() {
       if (!params.id) return;
 
       try {
-        const response = await fetch(`https://techstore-qzd2.onrender.com/products/${params.id}`);
+        const response = await fetch(`https://tech-store-wqpq.vercel.app/products/${params.id}`);
         
         if (!response.ok) {
           throw new Error('Produto não encontrado no banco de dados');

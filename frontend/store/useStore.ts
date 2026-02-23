@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-const API_URL = 'https://techstore-qzd2.onrender.com'
+const API_URL = 'https://tech-store-wqpq.vercel.app'
 
 interface Product {
   id: number;
