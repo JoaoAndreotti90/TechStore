@@ -45,14 +45,16 @@ export class CheckoutService {
       quantity: item.quantity || 1,
     }));
 
+    const frontendUrl = process.env.FRONTEND_URL || 'https://tech-store-topaz-sigma.vercel.app';
+
     const session = await this.stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
       customer_email: body.email,
       client_reference_id: order.id.toString(),
-      success_url: 'http://localhost:3002/success?session_id={CHECKOUT_SESSION_ID}',
-      cancel_url: 'http://localhost:3002/',
+      success_url: `${frontendUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${frontendUrl}/`,
     });
 
     return { url: session.url };
